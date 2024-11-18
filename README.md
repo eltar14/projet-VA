@@ -27,3 +27,13 @@ Numbers :
 ## Testing
 
 - [Learn ASL Alphabet Video](https://www.youtube.com/watch?v=6_gXiBe9y9A)
+
+## Models
+
+A creuser :
+
+- [Video Object Detection with RetinaNet](https://freedium.cfd/https://medium.com/@findalexli/object-detection-object-detection-is-an-important-task-in-the-field-of-computer-vision-research-63fdcc006fb1)
+- [nwojke / deep_sort](https://github.com/nwojke/deep_sort)
+- [Object-Detection: Advanced Object Detection with RetinaNet](https://medium.com/@vipas.ai/object-detection-advanced-object-detection-with-retinanet-a326c92a2e34)
+- [jaspereb / Retinanet-Tutorial](https://github.com/jaspereb/Retinanet-Tutorial)
+
