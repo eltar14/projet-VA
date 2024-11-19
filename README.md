@@ -37,3 +37,8 @@ A creuser :
 - [Object-Detection: Advanced Object Detection with RetinaNet](https://medium.com/@vipas.ai/object-detection-advanced-object-detection-with-retinanet-a326c92a2e34)
 - [jaspereb / Retinanet-Tutorial](https://github.com/jaspereb/Retinanet-Tutorial)
 
+## Projects 
+
+- [MuhammadMoinFaisal / Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8?tab=readme-ov-file)
+- [mukund0502 / sign_recognition_yolo-v8](https://github.com/mukund0502/sign_recognition_yolo-v8/tree/main)
+- [paulinamoskwa / Real-Time-Sign-Language](https://github.com/paulinamoskwa/Real-Time-Sign-Language?tab=readme-ov-file)
