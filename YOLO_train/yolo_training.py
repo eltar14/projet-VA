@@ -40,3 +40,4 @@ if __name__ == '__main__':
     source = new_path + "\\" + objectif
     print(source)
     destination = ".\\models"
+    shutil.copy(source, destination)

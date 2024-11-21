@@ -2,9 +2,9 @@ import os
 import shutil
 from tqdm import tqdm
 
-BASE_PATH = "C:\\Users\\lebou\\OneDrive - yncréa\\000_UQAC\\Cours Automne\\Vision artificielle\\datasets\\ASL_Dataset"
+BASE_PATH = "YOLO_train\\ASL_Dataset"
 
-OUTPUT_PATH = "C:\\Users\\lebou\\OneDrive - yncréa\\000_UQAC\\Cours Automne\\Vision artificielle\\datasets\\ASL_Dataset_YOLO_3"
+OUTPUT_PATH = "YOLO_train\\datasets"
 
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 
@@ -26,9 +26,13 @@ print(f"names: ['{'\', \''.join(classes)}']") # les classes pour le fichier yaml
 
 
 def process_dataset(split):
-    split_path = os.path.join(BASE_PATH, split)
+    current_path = os.getcwd()
+    base_path = os.path.join(current_path, BASE_PATH)
+    output_path = os.path.join(current_path, OUTPUT_PATH)
 
-    split_output_path = os.path.join(OUTPUT_PATH, split.lower()) # creer les dossier train test ...
+    split_path = os.path.join(base_path, split)
+
+    split_output_path = os.path.join(output_path, split.lower()) # creer les dossier train test ...
     images_path = os.path.join(split_output_path, "images")
     labels_path = os.path.join(split_output_path, "labels")
     os.makedirs(images_path, exist_ok=True)
@@ -59,7 +63,7 @@ def process_dataset(split):
 
 
 if __name__ == "__main__":
-    for split in ["Train", "Test"]:  # titres des dossiers à traiter
+    for split in ["train", "test"]:  # titres des dossiers à traiter
         process_dataset(split)
 
     print("FINI !.")
