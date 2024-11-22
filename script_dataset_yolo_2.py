@@ -17,9 +17,12 @@ import shutil
 from tqdm import tqdm
 import random
 
-base_path = "C:\\Users\\lebou\\OneDrive - yncréa\\000_UQAC\\Cours Automne\\Vision artificielle\\datasets\\ASLYSet"
+actual_path = os.getcwd()
 
-output_path = "C:\\Users\\lebou\\OneDrive - yncréa\\000_UQAC\\Cours Automne\\Vision artificielle\\datasets\\ASLYSet_formatted"
+base_path = os.path.join(actual_path, "YOLO_train\\ASLYSet\\ASLYset")
+
+output_path = os.path.join(actual_path, "YOLO_train\\datasets")
+
 os.makedirs(output_path, exist_ok=True)
 
 # Liste des classes à utiliser

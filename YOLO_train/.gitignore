@@ -9,9 +9,11 @@
 
 /.idea
 
+/autre_sets
 /datasets
 /runs
 /.ipynb_checkpoints
 /.venv
 /ASL_Dataset
 /ASL_Dataset_YOLO
+/ASLYset
