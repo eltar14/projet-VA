@@ -9,3 +9,7 @@ python image_augmentation.py
 ```
 
 *Voilà*
+
+## Credits
+
+Largely inspired from [`muhammad-faizan-122 / yolo-data-augmentation`](https://github.com/muhammad-faizan-122/yolo-data-augmentation)
