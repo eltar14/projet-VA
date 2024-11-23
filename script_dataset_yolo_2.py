@@ -17,11 +17,17 @@ import shutil
 from tqdm import tqdm
 import random
 
-actual_path = os.getcwd()
+ACTUAL_PATH = os.getcwd()
 
-base_path = os.path.join(actual_path, "YOLO_train\\ASLYSet\\ASLYset")
-
-output_path = os.path.join(actual_path, "YOLO_train\\datasets")
+if os.name == 'nt': # Windows
+    BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train\\ASLYSet\\ASLYset")
+    output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")
+elif os.name == 'posix': # Linux
+    BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train/ASLYSet/ASLYset")
+    output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")
+else:
+    print("OS non supporté.")
+    exit(1)
 
 os.makedirs(output_path, exist_ok=True)
 
@@ -48,8 +54,8 @@ def split_data(data, train_ratio=0.9):
 
 def process_user_data(user):
     # Dossiers pour chaque utilisateur
-    user_images_path = os.path.join(base_path, "images", user)
-    user_labels_path = os.path.join(base_path, "labels", user)
+    user_images_path = os.path.join(BASE_PATH, "images", user)
+    user_labels_path = os.path.join(BASE_PATH, "labels", user)
 
     # Chemins de sortie pour Train et Test
     train_images_output_path = os.path.join(output_path, "train", "images")
@@ -109,9 +115,14 @@ def process_user_data(user):
                     label_file.write("\n".join(updated_labels) + "\n")
 
 def process_dataset():
-    users = os.listdir(os.path.join(base_path, "images"))
+    full_path = os.path.join(BASE_PATH, "images")
+    
+    if not os.path.exists(full_path):
+        os.makedirs(full_path, exist_ok=True)
+    
+    users = os.listdir(full_path)
     for user in users:
-        user_path = os.path.join(base_path, "images", user)
+        user_path = os.path.join(BASE_PATH, "images", user)
         if os.path.isdir(user_path):
             process_user_data(user)
 

@@ -1,5 +1,13 @@
 # projet-VA
 
+## Install
+
+Install dependencies :
+
+```bash
+pip -U setuptools install tqdm opencv-python numpy albumentations pybboxes
+```
+
 ## Datasets
 
 ### Without YOLO formatting
