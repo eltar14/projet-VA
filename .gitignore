@@ -1,0 +1,24 @@
+# Default ignored files
+httpRequests/
+shelf/
+workspace.xml
+
+# Datasource local storage ignored files
+dataSources/
+dataSources.local.xml
+
+# Python files
+.ipynb_checkpoints/
+.venv/
+.idea
+runs/
+*.pyc
+
+
+# Datasets
+ASLYSet/
+datasets/
+ASL_Dataset/
+ASL_Dataset_YOLO/
+autre_sets/
+datasets/
