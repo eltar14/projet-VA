@@ -24,7 +24,7 @@ YOLO nécessite, pour son entraînement, que les objets à détecter soient idé
 
 > TODO : Méthodologie de l'entraînement du modèle, à compléter
 
-## Difficultés rencontrées
+### Difficultés rencontrées
 
 Alors que nous pensions initialement que la détection se ferait facilement, nous avons rapidement été confrontés aux limites de nos premiers modèles. L'entraînement de YOLO se passait rapidement et facilement, mais le taux de détection en confrontant le modèle à des flux vidéos était très faible.
 
@@ -35,13 +35,13 @@ En comparant ces informations avec des tests locaux, nous en avons conclus que l
 1. Augmenter le taille du dataset
 2. Augmenter les images du dataset
 
-### Augmenter le taille du dataset
+#### Augmenter le taille du dataset
 
 Nous avons recherché des datasets supplémentaires pour augmenter notre base d'apprentissage, de caractéristiques différentes, comme des fonds de différentes couleurs. Le script `script_dataset_yolo_2.py` permet de fusionner un ensemble de datasets en un seul, pour entraîner le modèle sur un plus grand nombre d'images. 
 
 Ceci a effectivement permis d'améliorer les performances du modèle, mais pas suffisamment pour obtenir des résultats satisfaisants. Nous avons donc décidé de passer à l'étape suivante.
 
-### Augmenter les images du dataset 
+#### Augmenter les images du dataset 
 
 Pour améliorer encore les performances du modèle, nous avons rédigé un script de *data augmentation*, pour ajouter du bruit et des changements entre les différentes images du dataset. 
 
@@ -60,9 +60,9 @@ Ce script paramétrable, disponible dans le dossier `image_augmentation/`, appli
 
 Ce script a été rédigé avec la librairie python `albumentations`, qui permet de réaliser des transformations d'images de manière simple et efficace. La partie la plus complexe de cette étape a été d'arriver à conserver les informations de labels pendant les transformations du type rotation ou découpage, pour que les *bounding boxes* soient correctement ajustées.
 
-## Choix de conception
+### Autres choix de conception
 
-> TODO : Choix de conception de l'application, à compléter
+> TODO : Si y a d'autres choses à dire
 
 ## Résultats
 
