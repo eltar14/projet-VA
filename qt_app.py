@@ -167,5 +167,5 @@ def run_yolo_app(model, video_path=None):
     sys.exit(app.exec())
 
 if __name__ == '__main__':
-    model = YOLO("yolo11n.pt")  # Modèle YOLO pré-entraîné pour tester
-    run_yolo_app(model, video_path="videos/video1.mp4")  # ou laisser video_path vide ou None pour utiliser la webcam
+    model = YOLO("YOLO_train/models/best.pt")  # Modèle YOLO pré-entraîné pour tester
+    run_yolo_app(model)  # ou laisser video_path vide ou None pour utiliser la webcam
