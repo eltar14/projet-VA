@@ -21,15 +21,15 @@ if __name__ == '__main__':
         print("Warning: Using CPU. This will be slow.")
 
     # Create a new YOLO model from scratch
-    #model = YOLO("yolo11n.yaml")
+    model = YOLO("yolo11n.yaml")
     # OR
     # Load a pre-existing model
-    model = YOLO("models/best.pt")
+    #model = YOLO("models/best.pt")
 
     print(model)
 
     # Train the model
-    model.train(data='config.yaml', epochs=64)
+    model.train(data='config.yaml', epochs=100)
 
     # Save the model
     path = model.export()

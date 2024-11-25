@@ -6,7 +6,7 @@ import numpy as np
 #import pybboxes as pbx
 
 # Import the constants file
-with open("image_augmentation/constants.yaml", 'r') as stream:
+with open("constants.yaml", 'r') as stream:
     CONSTANTS = yaml.safe_load(stream)
 
 
