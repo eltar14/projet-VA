@@ -92,6 +92,7 @@ class YOLOQtApp(QMainWindow):
         :return: rien, affichage.
         """
         ret, frame = self.cap.read()
+        frame = cv2.flip(frame, 1) # miroir
         if not ret:
             self.timer.stop()
             print("Erreur lors de la lecture du flux vidéo.")
