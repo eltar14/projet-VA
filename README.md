@@ -14,7 +14,7 @@ source venv/bin/activate
 Install dependencies :
 
 ```bash
-pip -U setuptools install tqdm opencv-python numpy albumentations
+pip install ultralytics tqdm opencv-python numpy albumentations qtpy
 ```
 
 ### Option 2 : Conda Install
