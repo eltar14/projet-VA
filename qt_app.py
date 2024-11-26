@@ -18,6 +18,7 @@ import cv2
 import sys
 from ultralytics import YOLO
 
+
 class YOLOQtApp(QMainWindow):
     def __init__(self, model, video_path=None):
         super().__init__()
@@ -28,7 +29,8 @@ class YOLOQtApp(QMainWindow):
         self.detected_text = ""  # texte concaténé
         self.last_detection = None
         self.repetition_counter = 0  # compteur de repetition
-        self.repetition_threshold = 25  # seuil de frames consécutives apres lequel on repete la lettre
+        self.minimum_time_threshold = 30  # seuil de frames consécutives minimum avec la meme detection avant de prendre en compte
+        self.repetition_threshold = 60  # seuil de frames consécutives apres lequel on repete la lettre
 
         # Configurer l'interface de la fenêtre
         self.setWindowTitle("YOLO ASL Detection")
@@ -66,7 +68,7 @@ class YOLOQtApp(QMainWindow):
         toggle la mise en pause ou non de la détection des lettres
         :return:
         """
-        if self.is_paused: # si en pause et cliqué
+        if self.is_paused:  # si en pause et cliqué
             self.timer.start(30)  # Reprendre le timer
             self.pause_button.setText("Pause")
         else:
@@ -95,12 +97,11 @@ class YOLOQtApp(QMainWindow):
             print("Erreur lors de la lecture du flux vidéo.")
             return
 
-        results = self.model(frame) # faire une prédiction sur la frame
+        results = self.model(frame)  # faire une prédiction sur la frame
         result_frame = results[0].plot()  # ajouter les boxes et les labels sur la frame
 
         # Extraction des labels des détectiobs
-        current_detection = [] # liste des current frame detectionS
-
+        current_detection = []  # liste des current frame detectionS
 
         # Concatener ou non les prédictions
         if self.concat_enabled:
@@ -109,21 +110,22 @@ class YOLOQtApp(QMainWindow):
                 label = self.model.names[class_id]  # on trouve son label
 
                 # Vérifie si la détection actuelle est la même que la dernière
-                if label == self.last_detection:
+
+                if label == self.last_detection or self.repetition_counter == 0:
                     self.repetition_counter += 1
                 else:
                     self.repetition_counter = 0  # réinitialiser si la détection change
 
-                # Ajoute la lettre seulement si elle est différente de la dernière
-                # OU si le seuil de répétition est atteint
-                if label != self.last_detection or self.repetition_counter >= self.repetition_threshold:
+                self.last_detection = label
+                # si le seuil de repetition de la meme lettre est atteint
+                if self.repetition_counter >= 30:
                     current_detection.append(label)
-                    self.last_detection = label
+
                     self.repetition_counter = 0  # Réinitialiser après ajout
                     break
 
+            self.detected_text += "".join(current_detection) + ""
 
-            self.detected_text += " ".join(current_detection) + " "
         else:
 
             for detection in results[0].boxes:
@@ -140,7 +142,7 @@ class YOLOQtApp(QMainWindow):
         h, w, ch = rgb_image.shape
         bytes_per_line = ch * w
         qt_image = QImage(rgb_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
-        self.video_label.setPixmap(QPixmap.fromImage(qt_image)) # affichage
+        self.video_label.setPixmap(QPixmap.fromImage(qt_image))  # affichage
 
     def closeEvent(self, event):
         """
@@ -152,6 +154,7 @@ class YOLOQtApp(QMainWindow):
         self.cap.release()
         cv2.destroyAllWindows()
         event.accept()
+
 
 def run_yolo_app(model, video_path=None):
     """
@@ -165,6 +168,7 @@ def run_yolo_app(model, video_path=None):
     main_window = YOLOQtApp(model, video_path)
     main_window.show()
     sys.exit(app.exec())
+
 
 if __name__ == '__main__':
     model = YOLO("YOLO_train/models/best.pt")  # Modèle YOLO pré-entraîné pour tester
