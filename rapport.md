@@ -18,11 +18,17 @@ Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est c
 
 > TODO : Le dataset envoyé sur whatsapp ne comporte que des lettres, je laisse ça vide pour l'instant, à compléter
 
-YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image. Nous avons donc choisi le...
+YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image. Nous avons donc choisi trois datasets :
+
+- [Sign Language Dataset for YOLOv7 - Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7) : Premier dataset utilisé, initialement peu fonctionnel, à cause du faible nombre d'images contenues dedans. Finalement gardé dans le mix des datasets, à cause de la diversité de ses images et de fonds de celles-ci.
+- [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) : Le plus important, mais utilisabilité réduite à cause de la répétition des mêmes signes et des mêmes fonds, qui a fini par causer de l'*overfitting*, résolu plus bas.
+- [ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) : De bonne qualité et variété.
 
 ### Méthodologie
 
 > TODO : Méthodologie de l'entraînement du modèle, à compléter
+
+### Utilisation des flux vidéos enregistrés et de la webcam
 
 ### Difficultés rencontrées
 
@@ -66,6 +72,11 @@ Ce script a été rédigé avec la librairie python `albumentations`, qui permet
 
 ## Résultats
 
+Nous avons réalisé nos tests utilisant deux types de flux vidéos :
+
+- Un flux vidéo enregistré, à partir de la vidéo Youtube [Train YOLOv8 on Custom Dataset | Sign Language Alphabets Detection and Recognition using YOLOv8](https://www.youtube.com/watch?v=-UoSr9Z_Bg0)
+- Un flux vidéo en direct, à partir de la *webcam* de l'ordinateur
+
 > TODO : Résultats de l'entraînement du modèle, à compléter
 
 ## Conclusion
@@ -89,3 +100,20 @@ des signes implique de signer de nombreux mots, à peu près autant qu'en langue
 plus complexe, capable de reconnaître un grand nombre de signes différents, avec un temps d'entraînement d'autant 
 conséquent. Ce serait une autre piste d'amélioration découlant de la première, qui serait possible en étendant le 
 *dataset* et en entraînant le modèle sur un plus grand nombre de signes.
+
+## Références
+
+Nous avons regardé de nombreux projets existants pour nous inspirer et comprendre les difficultés que nous allions rencontrer. Voici quelques-uns des projets que nous avons consultés.
+
+Avec RetinaNet, que nous avons fini par ne pas utiliser :
+
+- [Video Object Detection with RetinaNet](https://freedium.cfd/https://medium.com/@findalexli/object-detection-object-detection-is-an-important-task-in-the-field-of-computer-vision-research-63fdcc006fb1)
+- [nwojke / deep_sort](https://github.com/nwojke/deep_sort)
+- [Object-Detection: Advanced Object Detection with RetinaNet](https://medium.com/@vipas.ai/object-detection-advanced-object-detection-with-retinanet-a326c92a2e34)
+- [jaspereb / Retinanet-Tutorial](https://github.com/jaspereb/Retinanet-Tutorial)
+
+Avec YOLO, que nous avons finalement utilisé :
+
+- [MuhammadMoinFaisal / Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8?tab=readme-ov-file)
+- [mukund0502 / sign_recognition_yolo-v8](https://github.com/mukund0502/sign_recognition_yolo-v8/tree/main)
+- [paulinamoskwa / Real-Time-Sign-Language](https://github.com/paulinamoskwa/Real-Time-Sign-Language?tab=readme-ov-file)
