@@ -108,12 +108,12 @@ Nous avons regardé de nombreux projets existants pour nous inspirer et comprend
 Avec RetinaNet, que nous avons fini par ne pas utiliser :
 
 - [Video Object Detection with RetinaNet](https://freedium.cfd/https://medium.com/@findalexli/object-detection-object-detection-is-an-important-task-in-the-field-of-computer-vision-research-63fdcc006fb1)
-- [nwojke / deep_sort](https://github.com/nwojke/deep_sort)
+- [`nwojke / deep_sort`](https://github.com/nwojke/deep_sort)
 - [Object-Detection: Advanced Object Detection with RetinaNet](https://medium.com/@vipas.ai/object-detection-advanced-object-detection-with-retinanet-a326c92a2e34)
-- [jaspereb / Retinanet-Tutorial](https://github.com/jaspereb/Retinanet-Tutorial)
+- [`jaspereb / Retinanet-Tutorial`](https://github.com/jaspereb/Retinanet-Tutorial)
 
 Avec YOLO, que nous avons finalement utilisé :
 
-- [MuhammadMoinFaisal / Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8?tab=readme-ov-file)
-- [mukund0502 / sign_recognition_yolo-v8](https://github.com/mukund0502/sign_recognition_yolo-v8/tree/main)
-- [paulinamoskwa / Real-Time-Sign-Language](https://github.com/paulinamoskwa/Real-Time-Sign-Language?tab=readme-ov-file)
+- [`MuhammadMoinFaisal / Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8`](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8?tab=readme-ov-file)
+- [`mukund0502 / sign_recognition_yolo-v8`](https://github.com/mukund0502/sign_recognition_yolo-v8/tree/main)
+- [`paulinamoskwa / Real-Time-Sign-Language`](https://github.com/paulinamoskwa/Real-Time-Sign-Language?tab=readme-ov-file)
