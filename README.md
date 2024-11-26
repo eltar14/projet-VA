@@ -23,4 +23,8 @@ pip -U setuptools install tqdm opencv-python numpy albumentations
 
 ## Usage
 
-// TODO
+To download and merge the datasets, see the `dataset_formatting/`.
+
+To augment the images, see the `image_augmentation/` folder.
+
+To train the model, see the `YOLO_train/` folder.
