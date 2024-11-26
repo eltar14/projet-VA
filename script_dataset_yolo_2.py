@@ -1,13 +1,11 @@
 # =============================================================================
-#   Fichier : script_dataset_yolo_2.py                                                       #
+#   Fichier : script_dataset_yolo_2.py                                        #
 #   Projet : projet-VA                                                        #
 #   Auteur : Groupe Gabin Elise Margot Antoine                                #
-#   Email : alboulch1@etu.uqac.ca                                             #
-#   Numéro étudiant : LEBA27060300                                            #
 #   Date : 21 novembre 2024                                                   #
 #
 #
-# pour mettre en forme le dataset
+# pour mettre en forme le dataset suivant dans une arborescence spécifique et faciliter le merge de datasets
 # https://data.mendeley.com/datasets/xs6mvhx6rh/1
 # =============================================================================
 
