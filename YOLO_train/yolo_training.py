@@ -21,10 +21,10 @@ if __name__ == '__main__':
         print("Warning: Using CPU. This will be slow.")
 
     # Create a new YOLO model from scratch
-    model = YOLO("yolo11n.yaml")
+    #model = YOLO("yolo11n.yaml")
     # OR
     # Load a pre-existing model
-    #model = YOLO("models/best.pt")
+    model = YOLO("models/best.pt")
 
     print(model)
 
