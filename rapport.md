@@ -72,8 +72,20 @@ Ce script a été rédigé avec la librairie python `albumentations`, qui permet
 
 > TODO : Conclusion si tout se passe bien, à modifier sinon
 
-Dans ce projet nous avons réussis à mettre en place un modèle de détection d'objets capable de reconnaître des signes en langue des signes en temps réel. Nous avons entraîné ce modèle sur un *dataset* de lettres et de chiffres en langue des signes, et avons obtenu des résultats satisfaisants. Notre application est capable de détecter et de classer des signes en temps réel, et peut être utilisée via une *webcam* ou sur des vidéos préenregistrées.
+Dans ce projet nous avons réussis à mettre en place un modèle de détection d'objets capable de reconnaître des signes en
+langue des signes américaine en temps réel. Nous avons entraîné ce modèle sur un *dataset* de lettres en langue des signes,
+et avons obtenu des résultats satisfaisants. Notre application est capable de détecter et de classer des signes en temps 
+réel, et peut être utilisée via une *webcam* ou sur des vidéos préenregistrées.
 
-Ce projet nous a montré l'importance du *dataset* dans la qualité des résultats d'un modèle de détection d'objets. Nous avons rencontré des difficultés, qui se sont avérées être liées à la qualité et la diversité de notre dataset. Nous avons dû augmenter sa taille et ses images (manipulations sur les images) pour obtenir des résultats satisfaisants, en conservant les informations de *bounding boxes*.
+Ce projet nous a montré l'importance du *dataset* dans la qualité des résultats d'un modèle de détection d'objets. Nous 
+avons rencontré des difficultés, qui se sont avérées être liées à la qualité et la diversité de notre dataset. Nous avons
+dû augmenter sa taille et ses images (manipulations sur les images) pour obtenir des résultats satisfaisants, en conservant 
+les informations de *bounding boxes*.
 
-Cette application avait une visée de démonstrateur, et se borne donc à reconnaître des lettres et chiffres. Dans un contexte réel, une discussion en langue des signes implique de signer de nombreux mots, à peu près autant qu'en langue vocale, et nécessiterait un modèle beaucoup plus complexe, capable de reconnaître un grand nombre de signes différents, avec un temps d'entraînement d'autant conséquent. Ce serait la piste d'amélioration la plus évidente pour ce projet, en étendant le *dataset* et en entraînant le modèle sur un plus grand nombre de signes.
+Cette application avait une visée de démonstrateur, et se borne donc à reconnaître des lettres. Dans un contexte réel, 
+les mains sont constamment en mouvement, une première piste d'amélioration que nous pourrions explorer serait de trouver 
+un moyen de détecter les lettres qui nécessitent un mouvement comme le "J" ou le "Z". De plus, une discussion en langue 
+des signes implique de signer de nombreux mots, à peu près autant qu'en langue vocale, et nécessiterait un modèle beaucoup 
+plus complexe, capable de reconnaître un grand nombre de signes différents, avec un temps d'entraînement d'autant 
+conséquent. Ce serait une autre piste d'amélioration découlant de la première, qui serait possible en étendant le 
+*dataset* et en entraînant le modèle sur un plus grand nombre de signes.
