@@ -46,7 +46,7 @@ def infere(model, cap):
 
 def demo(model, video_path=None):
     """
-    Fonction prenant en argument un modèle YOLO affichant les prédictions. On peut remplir l'argeument video_path
+    Fonction prenant en argument un modèle YOLO affichant les prédictions. On peut remplir l'argument video_path
     pour faire des prédictions à partir d'un fichier video existant (type MP4). Si laissé vide, il utilisera la
     webcam par défaut de l'ordi.
     :param model: modele YOLO
