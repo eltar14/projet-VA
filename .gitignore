@@ -14,7 +14,6 @@ dataSources.local.xml
 runs/
 *.pyc
 
-
 # Datasets
 ASLYSet/
 datasets/
@@ -23,3 +22,7 @@ ASL_Dataset_YOLO/
 autre_sets/
 datasets/
 basic_set/
+
+# Config files
+*.conf
+*.pdf
