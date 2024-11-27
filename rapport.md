@@ -70,6 +70,36 @@ Ce script a été rédigé avec la librairie python `albumentations`, qui permet
 
 > TODO : Si y a d'autres choses à dire
 
+## Utilisation
+
+<!--Voir https://mermaid.js.org/syntax/sequenceDiagram.html--> 
+
+```mermaid
+sequenceDiagram
+    participant U as Utilisateur
+    participant DA as DatasetsAggregator
+    participant IA as ImageAugmentation
+    participant W as Webcam
+    participant MY as ModèleYOLO
+
+    rect rgb(0, 0, 50)
+    note right of U: Préparer les datasets
+    U->>+DA: Fusionner les datasets
+    DA->>-U: Dataset fusionné
+    U->>+IA: Augmenter les images du dataset
+    IA->>-U: Dataset augmenté
+    U->>+MY: Entraîner le modèle
+    MY->>-U: Modèle entraîné
+    end
+
+    rect rgb(50, 0, 00)
+    note right of U: Utiliser l'application
+    U->>+W: Démarrer la capture vidéo
+    W->>-MY: Envoyer flux vidéo
+    MY->>U: Afficher les résultats
+    end
+```
+
 ## Résultats
 
 Nous avons réalisé nos tests utilisant deux types de flux vidéos :
