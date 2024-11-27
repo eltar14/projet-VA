@@ -2,9 +2,9 @@ import os
 import shutil
 from tqdm import tqdm
 
-BASE_PATH = "YOLO_train\\ASL_Dataset"
+BASE_PATH = "../YOLO_train\\ASL_Dataset"
 
-OUTPUT_PATH = "YOLO_train\\datasets"
+OUTPUT_PATH = "../YOLO_train\\datasets"
 
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 
