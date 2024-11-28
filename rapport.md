@@ -29,6 +29,19 @@ YOLO nécessite, pour son entraînement, que les objets à détecter soient idé
 > TODO : Méthodologie de l'entraînement du modèle, à compléter
 
 ### Utilisation des flux vidéos enregistrés et de la webcam
+Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du modèle YOLO soit sur un fichier vidéo (*type MP4*), soit directement le flux de la webcam principale de l'ordinateur.  
+
+### Utilisation d'un LLM pour affiner les prédictions et corriger les erreurs
+Nous avons mis en place une fonctionnalité permettant de fournir les lettres détectées par notre modèle dans un LLM (ChatGPT) en lui demandant de nous retourner le ou les mots les plus probables.  
+Cela permet de corriger les erreurs de détection comme une lettre manquante ou en double, voir même une mauvaise, ainsi que d'ajouter les espaces entre les mots si manquats.  
+La lib `openai` a été utilisée pour intéragir avec ChatGPT, à qui on a fourni le contexte suivant : 
+
+> "You are an intelligent assistant. You are part of an application of computer vision detecting American Sign Language. The following are the letters detected by a YOLO model. Try to guess which word or words the user tried to say. Answer only with the word or words."  
+
+Cet ajout s'est montré extrêmement efficace.   
+> GOTOKFC &rarr; go to KFC  
+
+> GIITHB &rarr; GITHUB
 
 ### Difficultés rencontrées
 
@@ -43,7 +56,9 @@ En comparant ces informations avec des tests locaux, nous en avons conclus que l
 
 #### Augmenter le taille du dataset
 
-Nous avons recherché des datasets supplémentaires pour augmenter notre base d'apprentissage, de caractéristiques différentes, comme des fonds de différentes couleurs. Le script `script_dataset_yolo_2.py` permet de fusionner un ensemble de datasets en un seul, pour entraîner le modèle sur un plus grand nombre d'images. 
+Nous avons recherché des datasets supplémentaires pour augmenter notre base d'apprentissage, de caractéristiques différentes, comme des fonds de différentes couleurs.  
+
+Afin de pouvoir fusionner des datasets, nous avons écrit les scripts `script_dataset_yolo.py` `script_dataset_yolo_2.py` qui permettent d'avoir la même arborescence en sortie et les mêmes classes de labels sur les datasets [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) et [ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) respectivement.
 
 Ceci a effectivement permis d'améliorer les performances du modèle, mais pas suffisamment pour obtenir des résultats satisfaisants. Nous avons donc décidé de passer à l'étape suivante.
 
