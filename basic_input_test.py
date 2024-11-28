@@ -2,8 +2,6 @@
 #   Fichier : basic_input_test.py                                             #
 #   Projet : projet-VA                                                        #
 #   Auteur : Groupe Gabin Elise Margot Antoine                                #
-#   Email : alboulch1@etu.uqac.ca                                             #
-#   Numéro étudiant : LEBA27060300                                            #
 #   Date : 12 novembre 2024                                                   #
 #
 #
