@@ -1,8 +1,8 @@
 # =============================================================================
-#   Fichier : script_dataset_yolo_2.py                                        #
+#   Fichier : script_dataset_yolo.py                                        #
 #   Projet : projet-VA                                                        #
 #   Auteur : Groupe Gabin Elise Margot Antoine                                #
-#   Date : 21 novembre 2024                                                   #
+#   Date : 12 novembre 2024                                                   #
 #
 # Ce script prend en entrée le dataset https://www.kaggle.com/datasets/kapillondhe/american-sign-language
 # On vient les mettre en forme pour une utilisation avec YOLO et mis dans une arborescence qui permettra
