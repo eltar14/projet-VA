@@ -5,7 +5,8 @@
 #   Date : 21 novembre 2024                                                   #
 #
 #
-# pour mettre en forme le dataset suivant dans une arborescence spécifique et faciliter le merge de datasets
+# Pour mettre en forme le dataset suivant dans une arborescence spécifique et faciliter le merge de datasets
+# Exclus les classes fn et sp, et vient remplacer les IDs de classe dans le fichier de label
 # https://data.mendeley.com/datasets/xs6mvhx6rh/1
 # =============================================================================
 
@@ -17,10 +18,10 @@ import random
 
 ACTUAL_PATH = os.getcwd()
 
-if os.name == 'nt': # Windows
+if os.name == 'nt':  # Windows
     BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train\\ASLYSet\\ASLYset")
     output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")
-elif os.name == 'posix': # Linux
+elif os.name == 'posix':  # Linux
     BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train/ASLYSet/ASLYset")
     output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")
 else:
@@ -38,20 +39,30 @@ all_classes = [
 excluded_classes = ["fn", "sp"]  # Classes à ignorer
 classes = [cls for cls in all_classes if cls not in excluded_classes]
 
-# Mapping des indices pour YOLO
 class_to_idx = {cls: idx for idx, cls in enumerate(classes)}
 
 # Seed pour reproductibilité
 random.seed(42)
 
+
 def split_data(data, train_ratio=0.9):
-    """Répartir les données en train et test selon un ratio."""
+    """
+    Répartir les données en train et test selon un ratio.
+    :param data: nom des images
+    :param train_ratio: ratio du dataset de train
+    :return: data splitté en train et test selon le train_ratio
+    """
     random.shuffle(data)
     split_index = int(len(data) * train_ratio)
     return data[:split_index], data[split_index:]
 
+
 def process_user_data(user):
-    # Dossiers pour chaque utilisateur
+    """
+    Divise en train test, renomme les images et labels avec un nom unique, corrige le label,
+    :param user:
+    :return:
+    """
     user_images_path = os.path.join(BASE_PATH, "images", user)
     user_labels_path = os.path.join(BASE_PATH, "labels", user)
 
@@ -66,8 +77,8 @@ def process_user_data(user):
     os.makedirs(test_images_output_path, exist_ok=True)
     os.makedirs(test_labels_output_path, exist_ok=True)
 
-    # Parcourir les classes pour cet utilisateur
-    for class_name in tqdm(os.listdir(user_images_path), desc=f"Processing {user}"):
+    for class_name in tqdm(os.listdir(user_images_path),
+                           desc=f"Processing {user}"):  # pour chaque classe de la personne
         if class_name not in classes:
             continue  # Ignorer les classes exclues
 
@@ -81,7 +92,8 @@ def process_user_data(user):
 
         train_images, test_images = split_data(images)
 
-        for img_name, split in zip(train_images + test_images, ['train'] * len(train_images) + ['test'] * len(test_images)):
+        for img_name, split in zip(train_images + test_images,
+                                   ['train'] * len(train_images) + ['test'] * len(test_images)):
             # Définir les chemins d'entrée et sortie
             img_path = os.path.join(class_images_path, img_name)
             label_name = os.path.splitext(img_name)[0] + ".txt"
@@ -112,20 +124,26 @@ def process_user_data(user):
                             updated_labels.append(" ".join(parts))  # Reconstruis la ligne
                     label_file.write("\n".join(updated_labels) + "\n")
 
+
 def process_dataset():
+    """
+    Appelle process_user_data pour chaque personne du dataset
+    :return:
+    """
     full_path = os.path.join(BASE_PATH, "images")
-    
+
     if not os.path.exists(full_path):
         os.makedirs(full_path, exist_ok=True)
-    
+
     users = os.listdir(full_path)
     for user in users:
         user_path = os.path.join(BASE_PATH, "images", user)
         if os.path.isdir(user_path):
             process_user_data(user)
 
-# ====================================================================================================
-# Appeler la fonction pour le traitement du dataset
-process_dataset()
 
-print("Traitement terminé.")
+# ====================================================================================================
+if __name__ == '__main__':
+    process_dataset()
+
+    print("Traitement terminé.")

@@ -1,3 +1,16 @@
+# =============================================================================
+#   Fichier : script_dataset_yolo_2.py                                        #
+#   Projet : projet-VA                                                        #
+#   Auteur : Groupe Gabin Elise Margot Antoine                                #
+#   Date : 21 novembre 2024                                                   #
+#
+# Ce script prend en entrée le dataset https://www.kaggle.com/datasets/kapillondhe/american-sign-language
+# On vient les mettre en forme pour une utilisation avec YOLO et mis dans une arborescence qui permettra
+# facilement de merge avec d'autres datasets.
+# Les images étant crop autour de la main, on considère le centre de détection à 0.5 0.5 et la zone à 1 1.
+# On vient exclure les classes Space et Nothing.
+# =============================================================================
+
 import os
 import shutil
 from tqdm import tqdm
