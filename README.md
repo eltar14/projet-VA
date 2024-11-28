@@ -14,12 +14,13 @@ source venv/bin/activate
 Install dependencies :
 
 ```bash
-pip install ultralytics tqdm opencv-python numpy albumentations qtpy
+pip install ultralytics tqdm opencv-python numpy albumentations pyside6
 ```
 
 ### Option 2 : Conda Install
-
-// TODO
+```bash
+conda install -c conda-forge ultralytics tqdm opencv numpy albumentations pyside6 openai
+```
 
 ## Usage
 
