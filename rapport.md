@@ -8,6 +8,8 @@ Cette application repose sur un modèle YOLO (You Only Look Once), entraîné sp
 
 L'objectif principal de cette application est de démontrer la faisabilité de l'accessibilité et l'aide aux personnes malentendantes pour communiquer plus facilement avec leur entourage, en particulier dans des situations où un traducteur de langue des signes n'est pas disponible. Le *scope* de cette application s'inscrit dans le cadre d'un démonstrateur sur des signes simples (lettres), en ignorant l'ensemble du dictionnaire de langue des signes, pour permettre au projet de conserver la dimension d'un projet de fin de session. 
 
+## Cahier des charges
+
 ## Implémentation
 
 ### Modèle
