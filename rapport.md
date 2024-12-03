@@ -16,8 +16,6 @@ Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est c
 
 ### *Dataset*
 
-> TODO : Le dataset envoyé sur whatsapp ne comporte que des lettres, je laisse ça vide pour l'instant, à compléter
-
 YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image. Nous avons donc choisi trois datasets :
 
 - [Sign Language Dataset for YOLOv7 - Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7) : Premier dataset utilisé, initialement peu fonctionnel, à cause du faible nombre d'images contenues dedans. Finalement gardé dans le mix des datasets, à cause de la diversité de ses images et de fonds de celles-ci.
@@ -125,8 +123,6 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 > TODO : Résultats de l'entraînement du modèle, à compléter
 
 ## Conclusion
-
-> TODO : Conclusion si tout se passe bien, à modifier sinon
 
 Dans ce projet nous avons réussis à mettre en place un modèle de détection d'objets capable de reconnaître des signes en
 langue des signes américaine en temps réel. Nous avons entraîné ce modèle sur un *dataset* de lettres en langue des signes,
