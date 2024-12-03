@@ -8,6 +8,8 @@ Cette application repose sur un modèle YOLO (You Only Look Once), entraîné sp
 
 L'objectif principal de cette application est de démontrer la faisabilité de l'accessibilité et l'aide aux personnes malentendantes pour communiquer plus facilement avec leur entourage, en particulier dans des situations où un traducteur de langue des signes n'est pas disponible. Le *scope* de cette application s'inscrit dans le cadre d'un démonstrateur sur des signes simples (lettres), en ignorant l'ensemble du dictionnaire de langue des signes, pour permettre au projet de conserver la dimension d'un projet de fin de session. 
 
+## Cahier des charges
+
 ## Implémentation
 
 ### Modèle
@@ -19,6 +21,18 @@ Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est c
 > TODO : Le dataset envoyé sur whatsapp ne comporte que des lettres, je laisse ça vide pour l'instant, à compléter
 
 YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image.   
+Nous avons premièrement cherché un dataset sur Roboflow, mais ceux-cis étaient de petite taille (<1000 images).  
+Cela nous a conduits à en chercher sur d'autres plateformes, mais les résultats étaient limités en raison de l'arborescence spécifique des fichiers en entrée de YOLO.  
+
+```
+dataset/
+├── test
+│   ├── images
+│   └── labels
+└── train
+    ├── images
+    └── labels
+```
 Nous avons premièrement cherché un dataset sur Roboflow, mais ceux-ci étaient de petite taille (<1000 images).  
 Cela nous a conduits à en chercher sur d'autres plateformes.  
 
