@@ -17,12 +17,13 @@ runs/
 # Datasets
 ASLYSet/
 datasets/
-ASL_Dataset/
-ASL_Dataset_YOLO/
 autre_sets/
-datasets/
 basic_set/
+faces/
 
 # Config files
 *.conf
 *.pdf
+
+# API keys
+secret.py
