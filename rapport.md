@@ -20,7 +20,17 @@ Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est c
 
 YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image.   
 Nous avons premièrement cherché un dataset sur Roboflow, mais ceux-cis étaient de petite taille (<1000 images).  
-Cela nous a conduit à en chercher sur d'autres plateformes.  
+Cela nous a conduit à en chercher sur d'autres plateformes, mais les résultats étaient limités en raison de l'arborescence spécifique des fichiers en entrée de YOLO.  
+
+```
+dataset/
+├── test
+│   ├── images
+│   └── labels
+└── train
+    ├── images
+    └── labels
+```
 
 Nous avons donc progressivement choisi trois datasets puis les avons fait correspondre à nos critères (explications détaillées dans la partie *Difficultés rencontrées*) :
 
