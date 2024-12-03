@@ -19,8 +19,8 @@ import random
 ACTUAL_PATH = os.getcwd()
 
 if os.name == 'nt':  # Windows
-    BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train\\ASLYSet\\ASLYset")
-    output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")
+    BASE_PATH = os.path.join(ACTUAL_PATH, "..\\YOLO_train\\ASLYSet\\ASLYset")
+    output_path = os.path.join(ACTUAL_PATH, "..\\YOLO_train\\datasets")
 elif os.name == 'posix':  # Linux
     BASE_PATH = os.path.join(ACTUAL_PATH, "YOLO_train/ASLYSet/ASLYset")
     output_path = os.path.join(ACTUAL_PATH, "YOLO_train/datasets")

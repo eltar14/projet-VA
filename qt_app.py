@@ -26,6 +26,7 @@ client = OpenAI(
 class YOLOQtApp(QMainWindow):
     def __init__(self, model, video_path=None):
         super().__init__()
+
         self.model = model
         self.cap = cv2.VideoCapture(video_path or 0)
         self.is_paused = False  # bool de pause
@@ -163,8 +164,8 @@ class YOLOQtApp(QMainWindow):
             self.timer.stop()
             print("Erreur lors de la lecture du flux vidéo.")
             return
-
-        results = self.model(frame)  # faire une prédiction sur la frame
+        allowed_classes = [i for i in range(25)]  # Classes de 0 à 24 pour les lettres de l'alphabet
+        results = self.model.predict(frame, classes=allowed_classes)  # faire une prédiction sur la frame
         result_frame = results[0].plot()  # ajouter les boxes et les labels sur la frame
 
         # Extraction des labels des détectiobs
