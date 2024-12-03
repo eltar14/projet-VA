@@ -153,8 +153,6 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 
 ## Conclusion
 
-> TODO : Conclusion si tout se passe bien, à modifier sinon
-
 Dans ce projet nous avons réussis à mettre en place un modèle de détection d'objets capable de reconnaître des signes en
 langue des signes américaine en temps réel. Nous avons entraîné ce modèle sur un *dataset* de lettres en langue des signes,
 et avons obtenu des résultats satisfaisants. Notre application est capable de détecter et de classer des signes en temps 
@@ -189,7 +187,3 @@ Avec YOLO, que nous avons finalement utilisé :
 - [`MuhammadMoinFaisal / Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8`](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8?tab=readme-ov-file)
 - [`mukund0502 / sign_recognition_yolo-v8`](https://github.com/mukund0502/sign_recognition_yolo-v8/tree/main)
 - [`paulinamoskwa / Real-Time-Sign-Language`](https://github.com/paulinamoskwa/Real-Time-Sign-Language?tab=readme-ov-file)
-
-
-
-
