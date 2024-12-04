@@ -16,6 +16,7 @@ runs/
 
 # Datasets
 ASLYSet/
+ASL_Dataset/
 datasets/
 basic_set/
 faces/
