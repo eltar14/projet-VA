@@ -17,6 +17,7 @@ def run_yolo_augmentor():
 
     for image_number, image_file in enumerate(images):
         print(f"{image_number+1}-image is processing...\n")
+        print(f"image path : {image_file}")
         image, ground_truth_bboxes, augmented_file_name = get_input_data(image_file)
         augmented_image, augmented_label = get_augmented_results(image, ground_truth_bboxes)
         if len(augmented_image) and len(augmented_label):

@@ -14,10 +14,13 @@
 import os
 import shutil
 from tqdm import tqdm
+import random
 
 BASE_PATH = "../YOLO_train\\ASL_Dataset"
 
 OUTPUT_PATH = "../YOLO_train\\datasets"
+
+MAX_LETTERS = 30 # nombre max d'images par lettre. Notons que ce nombre sera doublé avec l'augmentation de données ensuite
 
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 
@@ -31,6 +34,7 @@ excluded_classes = ["Space", "Nothing"]
 
 classes = [cls for cls in all_classes if cls not in excluded_classes]  # classes retenues
 class_to_idx = {cls: idx for idx, cls in enumerate(classes)}  # indexes
+
 
 
 # names: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -53,6 +57,8 @@ def process_dataset(split):
 
     for class_name in tqdm(os.listdir(split_path), desc=f"Processing {split}", unit="class"): # pour chaque dossier
 
+        number_images = 0
+
         if class_name not in classes: # si le nom du dossier est PAS dans les classes selectionnées on ignore
             continue
 
@@ -60,8 +66,18 @@ def process_dataset(split):
         if not os.path.isdir(class_path):
             continue
 
+
         class_idx = class_to_idx[class_name]
         for img_name in os.listdir(class_path):
+
+            randomised = random.randint(0, 10)
+
+            if randomised < 6:
+                continue
+
+            if number_images >= MAX_LETTERS :
+                break
+
             img_path = os.path.join(class_path, img_name)
             if img_name.lower().endswith(('.png', '.jpg', '.jpeg')):  # vérif format
                 new_img_name = f"{split}_{class_name}_{img_name}"  # noms uniques
@@ -73,6 +89,8 @@ def process_dataset(split):
                 label_path = os.path.join(labels_path, f"{os.path.splitext(new_img_name)[0]}.txt") # label correspondant
                 with open(label_path, 'w') as label_file:
                     label_file.write(f"{class_idx} 0.5 0.5 1 1\n") # en dur parce que flemme
+
+                number_images += 1
 
 
 if __name__ == "__main__":
