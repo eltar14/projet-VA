@@ -21,9 +21,50 @@ Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est c
 
 > TODO : Le dataset envoyé sur whatsapp ne comporte que des lettres, je laisse ça vide pour l'instant, à compléter
 
-YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou à défauts situés au centre de l'image.   
-Nous avons premièrement cherché un dataset sur Roboflow, mais ceux-cis étaient de petite taille (<1000 images).  
-Cela nous a conduits à en chercher sur d'autres plateformes, mais les résultats étaient limités en raison de l'arborescence spécifique des fichiers en entrée de YOLO.  
+YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou qu'ils constituent toute l'image (pas d'autres éléments à côté ou derrière).   
+
+Nous avons cherché des datasets depuis différentes sources : Kaggle, Roboflow, Hugging Face... Mais trouver un bon dataset est plutôt compliqué. Ils sont soit très petits (<1000 images en tout, donc une trentaines d'images par lettres), soit peu d'images mais copiées-collées pour donner l'impression d'avoir un set plus conséquent. 
+Cela nous a conduits à en chercher sur d'autres plateformes, mais les résultats étaient limités en raison de l'arborescence spécifique des fichiers en entrée de YOLO, décrite dans la partie méthodologie.  
+
+
+Nous avons donc progressivement choisi trois datasets puis les avons fait correspondre à nos critères (explications détaillées dans la partie *Difficultés rencontrées*) :
+
+- [Sign Language Dataset for YOLOv7 - Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7) : Premier dataset utilisé contenant toutes les lettres ASL, initialement peu fonctionnel, à cause du faible nombre d'images contenues dedans, mais il a l'avantage d'être en format YOLO natif (images + labels). Finalement gardé dans le mix des datasets, pour la diversité de ses images et de fonds de celles-ci. 
+- [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) : Le plus important avec 166000 images, mais une utilisabilité réduite à cause de la répétition des mêmes signes et des mêmes fonds, qui a fini par causer de l'*overfitting*, résolu plus bas.
+- [ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) : Dataset de bonne qualité contenant des images variées : il est composé de 5200 images, avec 4 personnes différentes interprétant les signes. Cependant, il ne contient pas les lettres *J* et *Z,* car elles nécessitent d'être accompagnées d'un mouvement en plus du signe. Des caractères *fn* et *sp* sont aussi présents, que nous avons mis de côté pour correspondre aux autres datasets. Plus de détails dans la partie *Difficultés rencontrées* &rarr; *Augmenter la taille du dataset*
+
+| Nom du set                        | Source                                                                                           | Description                                                                                                                                                               | Points forts                                                                                   | Points faibles                                                  |
+|-----------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| Sign Language Dataset for YOLOv7 | [Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7)           | Dataset contenant toutes les lettres ASL, en format YOLO natif (images + labels).                                                                                         | Format YOLO natif, diversité des images et des fonds.                                           | Faible nombre d'images : initialement peu fonctionnel.          |
+| American Sign Language            | [Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language)                   | Dataset majeur avec 166 000 images.                                                                                                                                       | Grand volume d'images.                                                                          | Répétition des mêmes signes et fonds, causant de l'overfitting. |
+| ASLYset                           | [Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1)                                    | Dataset de 5200 images variées avec 4 personnes différentes interprétant les signes. Contient des caractères *fn* et *sp* non utilisés.                                    | Bonne qualité des images, diversité des interprétants et des fonds.                            | Ne contient pas les lettres *J* et *Z* nécessitant un mouvement |  
+
+
+### Méthodologie
+
+> TODO : Méthodologie de l'entraînement du modèle, à compléter
+
+#### Modèle Ultralytics YOLO11
+Le modèle entraîné est un modèle nano de YOLO11 de Ultralytics.
+
+Le modèle de détection d’images Ultralytics YOLO11 (You Only Look Once 11) est une évolution des précédentes versions de YOLO, qui sont des modèles de détection d’objets en temps réel. Il représente une avancée significative dans la détection d'objets en temps réel, offrant une meilleure extraction des caractéristiques, une efficacité accrue et une précision améliorée par rapport à ses prédécesseurs.
+
+L'architecture utilisée par YOLO11 est une architecture de réseau de neurones convolutionnels (CNN) qui prend une image en entrée et la divise en une grille. Chaque cellule de la grille est responsable de la détection des objets dont le centre se trouve dans cette cellule.
+
+Pour chaque cellule de la grille, plusieurs "boîtes d'ancrage" sont définies, avec différentes tailles et proportions pour couvrir des objets de différentes dimensions. Chaque boîte d'ancrage prédit la probabilité de présence d'un objet et les coordonnées de la boîte englobante.
+
+Pour chaque boîte d'ancrage, le modèle prédit :
+- Les coordonnées de la boîte englobante (x, y, largeur, hauteur)
+- La confiance de la prédiction, c'est-à-dire la probabilité qu'un objet soit présent dans la boîte
+- Les classes d'objets possibles avec leur probabilité respective
+
+Après avoir généré toutes les prédictions, une étape de suppression non maximale est appliquée pour éliminer les prédictions redondantes et ne conserver que les boîtes avec la plus haute probabilité.
+
+#### Entraînement du modèle 
+
+YOLO nécessite des conditions spécifique pour pouvoir réaliser un entraînement. 
+
+Premièrement, l'architecture du dataset doit suivre la configuration suivante : 
 
 ```
 dataset/
@@ -34,18 +75,39 @@ dataset/
     ├── images
     └── labels
 ```
-Nous avons premièrement cherché un dataset sur Roboflow, mais ceux-ci étaient de petite taille (<1000 images).  
-Cela nous a conduits à en chercher sur d'autres plateformes.  
+le dataset doit être organisé en plusieurs répertoires : 
+- images/ : qui contiendra toutes les images possédant l'un des formats ['bmp', 'jpg', 'jpeg', 'png', 'tif', 'tiff', 'dng']. 
+- labels/ : qui contiendra tous les labels associés aux images, au format 'txt'. Chacune d'entre elles possédera un label, avec le même nom (seul le type du fichier change)
+    
+On peut encore les découper en 2 sous-dossiers : 
 
-Nous avons donc progressivement choisi trois datasets puis les avons fait correspondre à nos critères (explications détaillées dans la partie *Difficultés rencontrées*) :
+- train/ : qui contiendra donc les données d'entrainement
+- test/ : qui contiendra les données de test du modèle
 
-- [Sign Language Dataset for YOLOv7 - Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7) : Premier dataset utilisé contenant toutes les lettres ASL, initialement peu fonctionnel, à cause du faible nombre d'images contenues dedans, mais il a l'avantage d'être en format YOLO natif (images + labels). Finalement gardé dans le mix des datasets, à cause de la diversité de ses images et de fonds de celles-ci. 
-- [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) : Le plus important avec 166000 images, mais une utilisabilité réduite à cause de la répétition des mêmes signes et des mêmes fonds, qui a fini par causer de l'*overfitting*, résolu plus bas.
-- [ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) : Dataset de bonne qualité contenant des images variées : il est composé de 5200 images, avec 4 personnes différentes interprétant les signes. Cependant, il ne contient pas les lettres *J* et *Z,* car elles nécessitent d'être accompagnées d'un mouvement en plus du signe. Des caractères *fn* et *sp* sont aussi présents et il a fallu s'en débarrasser pour correspondre aux autres datasets. Plus de détails dans la partie *Difficultés rencontrées* &rarr; *Augmenter la taille du dataset*
+Ensuite, les labels doivent respecter une mise en forme particulière : 
 
-### Méthodologie
+```
+<class> <x_center> <y_center> <width> <height> 
+```
+Il y a autant de lignes qu'il y a d'éléments à observer sur l'image.
+    
+De plus, les valeurs numériques sont normalisées. Donc si le centre de l'image est situé à 120x120px pour une image qui fait 240x240px, les valeurs du x et y du centre seront 0.5
 
-> TODO : Méthodologie de l'entraînement du modèle, à compléter
+Enfin, le modèle fonctionne avec un fichier .yaml qui permet de traduire les classes.
+
+```
+train: ./train/images
+val: ./test/images
+
+nc: 27
+names: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Face']
+```
+
+Une fois ces conditions respectées, nous pouvons commencer l'entraînement du modèle. 
+
+Ce dernier peut soit débuter depuis un modèle vierge fournit par YOLO (par exemple yolo11n.pt) soit en faisant du transfert learning ou de l'affinement de paramètres en partant d'un modèle déjà entraîné. 
+
+Nous sommes partis du premier cas, en entraînant notre modèle "from scratch". 
 
 ### Utilisation des flux vidéos enregistrés et de la webcam
 Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du modèle YOLO soit sur un fichier vidéo (*type MP4*), soit directement le flux de la webcam principale de l'ordinateur.  
@@ -93,15 +155,15 @@ Afin de pouvoir fusionner des datasets, nous avons écrit les scripts `script_da
 [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language), le dataset aux 166k images, n'est pas conçu pour YOLO : il contient simplement des images cadrées serrées sur fond blanc, le tout trié par classe. Nous avons donc écrit un script python pour en changer l'arborescence et ajouter les fichiers de label avec leur nom unique.
 Pour le premier point, nous avons juste déplacé les images dans un dossier avec la bonne arborescence.  
 Pour le second point, l'ajout des fichiers de label, nous sommes partis du postulat que les images étant cadrées serré et centré, nous pouvions considérer la zone de détection comme l'image entière, ce qui en label YOLO donne ```0.5 0.5 1 1 ```. Concernant la classe, leur ordre et nombre est le même que pour le dataset précédent. On vient donc créer un fichier texte du même nom avec ```<class_number> 0.5 0.5 1 1```.
+Pour ne pas sur-apprendre de ces images, seule une portion du dataset a été utilisé (30 images par classe, prises aléatoirement dans le set)
 
-
-[ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) est un dataset conçu pour YOLO, mais ni son arborescence ni ses numéros de classes ne correspondent aux nôtres. En effet les images ont été faites avec 4 personnes différentes, avec chacune son dossier. Afin de le rendre utilisable dans notre mélange de datasets, nous devons faire deux choses : refaire l'arborescence et mettre à jour les numéros de calsse dans les labels.   
+[ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) est un dataset conçu pour YOLO, mais ni son arborescence ni ses numéros de classes ne correspondent aux nôtres. En effet les images ont été faites avec 4 personnes différentes, avec chacune son dossier. Afin de le rendre utilisable dans notre mélange de datasets, nous devons faire deux choses : refaire l'arborescence et mettre à jour les numéros de classe dans les labels.   
 Pour le premier point, nous avons procédé de manière analogue au dataset précédent.  
 Pour le second, il fallait faire en sorte de supprimer les décalages des numéros de classe induits par les classes *J* et *Z* manquantes et *fn* et *sp*. Nous avons parsé les fichiers de label avec les espaces avant d'en modifier le premier élément, puis reconstruit la string avant de remplacer dans le fichier.  
 Nous avons aussi pris garde à utiliser des noms uniques pour chaque paire de fichiers. 
 
 
-Ceci a effectivement permis d'améliorer les performances du modèle, mais pas suffisamment pour obtenir des résultats satisfaisants. Nous avons donc décidé de passer à l'étape suivante.
+Ceci a effectivement permis d'améliorer les performances du modèle, mais les résultats ne nous satisfaisaient. Nous avons donc décidé de passer à l'étape suivante.
 
 #### Augmenter les images du dataset 
 
@@ -125,6 +187,16 @@ Ce script a été rédigé avec la librairie python `albumentations`, qui permet
 ### Autres choix de conception
 
 > TODO : Si y a d'autres choses à dire
+
+La détection du visage joue un rôle essentiel dans la communication en langue des signes, car le visage est une composante clé pour transmettre des informations non verbales cruciales. Dans certains cas, les mouvements du visage, comme le froncement des sourcils ou l’inclinaison de la tête, peuvent même changer complètement le sens d’un signe ou indiquer une structure grammaticale spécifique. Par exemple, une question peut être signifiée uniquement par une expression faciale combinée aux gestes. Par conséquent, intégrer la détection du visage dans les systèmes de reconnaissance automatique de la langue des signes améliore significativement leur précision et leur capacité à interpréter le message dans son intégralité, en tenant compte des éléments visuels et contextuels indispensables pour une communication fluide et naturelle.
+
+Nous avons donc décidé de rajouter la détection des visages à notre modèle, pour mettre l'accent sur tous les éléments nécessaires à la communication par langue des signes.
+
+
+Pour cela nous avons ajouté un dataset et une classe supplémentaire à notre modèle : 
+
+[Face Detection Dataset - Kaggle](https://www.kaggle.com/datasets/freak2209/face-data) : composé de plus de 1000 images, mais dont nous n'en prenons que 300 pour le train et 30 pour le test, pour conserver un ordre de grandeur cohérent avec les autres classes. Il est déjà mis en forme pour YOLO, nous avons seulement modifié le numéro de la classe (qui était 0, déjà utilisée pour la lettre A)
+
 
 ## Utilisation
 
@@ -163,6 +235,7 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 - Un flux vidéo enregistré, à partir de la vidéo Youtube [Train YOLOv8 on Custom Dataset | Sign Language Alphabets Detection and Recognition using YOLOv8](https://www.youtube.com/watch?v=-UoSr9Z_Bg0)
 - Un flux vidéo en direct, à partir de la *webcam* de l'ordinateur
 
+### Résultats de l'entraînement des modèles
 > TODO : Résultats de l'entraînement du modèle, à compléter
 
 ## Conclusion
