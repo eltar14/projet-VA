@@ -17,13 +17,16 @@ runs/
 # Datasets
 ASLYSet/
 datasets/
-autre_sets/
 basic_set/
 faces/
+*.rar
+*.zip
 
 # Config files
 *.conf
 *.pdf
+*.mp4
+
 
 # API keys
 secret.py

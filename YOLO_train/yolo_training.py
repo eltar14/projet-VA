@@ -29,7 +29,7 @@ if __name__ == '__main__':
     print(model)
 
     # Train the model
-    model.train(data='config.yaml', epochs=100)
+    model.train(data='config.yaml', epochs=200)
 
     # Save the model
     path = model.export()

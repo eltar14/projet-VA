@@ -164,7 +164,7 @@ class YOLOQtApp(QMainWindow):
             self.timer.stop()
             print("Erreur lors de la lecture du flux vidéo.")
             return
-        allowed_classes = [i for i in range(25)]  # Classes de 0 à 24 pour les lettres de l'alphabet
+        allowed_classes = [i for i in range(26)]  # Classes de 0 à 25 pour les lettres de l'alphabet
         results = self.model.predict(frame, classes=allowed_classes)  # faire une prédiction sur la frame
         result_frame = results[0].plot()  # ajouter les boxes et les labels sur la frame
 
