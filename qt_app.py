@@ -119,6 +119,8 @@ class YOLOQtApp(QMainWindow):
     def get_chatgpt_response(self, user_input):
         """
         Envoie une requête à l'API ChatGPT et retourne la réponse.
+        :param user_input: concat des détections du modèle YOLO
+        :return:
         """
         try:
             # Messages pour le contexte
@@ -128,7 +130,8 @@ class YOLOQtApp(QMainWindow):
                     "content": (
                         "You are an intelligent assistant. You are part of an application of computer vision "
                         "detecting American Sign Language. The following are the letters detected by a YOLO model. "
-                        "Try to guess which word or words the user tried to say. Answer only with the word or words."
+                        "Try to guess which word or words the user tried to say. You can add punctuation if needed. "
+                        "You can adapt the case of letters according to the context Answer only with the word or words."
                     ),
                 },
                 {"role": "user", "content": user_input},
@@ -202,7 +205,7 @@ class YOLOQtApp(QMainWindow):
                 current_detection.append(label)
             self.detected_text = "\n".join(current_detection)
 
-        # Mise à jour de l'affichage avec le texte avec les signes/objets détectés
+        # màj affichage avec le texte avec les signes/objets détectés
         self.text_display.setText(self.detected_text)
 
         # Conversion RGB pour affichage
@@ -218,7 +221,6 @@ class YOLOQtApp(QMainWindow):
         :param event:
         :return:
         """
-        # Arreter le flux vidéo quand la fenêtre se ferme
         self.cap.release()
         cv2.destroyAllWindows()
         event.accept()
