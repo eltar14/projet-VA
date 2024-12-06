@@ -199,16 +199,17 @@ L'implémentation de la détection des visages ouvre la porte à de futures dét
 ## Utilisation
 
 <!--Voir https://mermaid.js.org/syntax/sequenceDiagram.html--> 
-
 ```mermaid
 sequenceDiagram
+accDescr: Diagramme de flux d'utilisation de l'application
+
     participant U as Utilisateur
     participant DA as DatasetsAggregator
     participant IA as ImageAugmentation
     participant W as Webcam
     participant MY as ModèleYOLO
 
-    rect rgb(0, 0, 50)
+    rect rgb(102, 217, 255)
     note right of U: Préparer les datasets
     U->>+DA: Fusionner les datasets
     DA->>-U: Dataset fusionné
@@ -218,7 +219,7 @@ sequenceDiagram
     MY->>-U: Modèle entraîné
     end
 
-    rect rgb(50, 0, 00)
+    rect rgb(255, 128, 128)
     note right of U: Utiliser l'application
     U->>+W: Démarrer la capture vidéo
     W->>-MY: Envoyer flux vidéo
