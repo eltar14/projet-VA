@@ -206,12 +206,14 @@ accDescr: Diagramme de flux d'utilisation de l'application
     participant U as Utilisateur
     participant DA as DatasetsAggregator
     participant IA as ImageAugmentation
-    participant W as Webcam
+    participant W as Interface Qt
     participant MY as ModèleYOLO
+    participant C as ChatGPT
 
     rect rgb(102, 217, 255)
     note right of U: Préparer les datasets
     U->>+DA: Fusionner les datasets
+    activate U
     DA->>-U: Dataset fusionné
     U->>+IA: Augmenter les images du dataset
     IA->>-U: Dataset augmenté
@@ -222,8 +224,18 @@ accDescr: Diagramme de flux d'utilisation de l'application
     rect rgb(255, 128, 128)
     note right of U: Utiliser l'application
     U->>+W: Démarrer la capture vidéo
-    W->>-MY: Envoyer flux vidéo
-    MY->>U: Afficher les résultats
+    W->>MY: Envoie une frame
+    activate MY
+    MY->>W: Renvoie une prédiction
+    deactivate MY
+    W->>-U: Montre le résultat
+    U->>+W: Demande une correction
+    W->>C: Envoie une chaîne de caractères
+    activate C
+    C->>W: Envoie un texte
+    deactivate C
+    W->>-U: Montre le texte
+    deactivate U
     end
 ```
 
