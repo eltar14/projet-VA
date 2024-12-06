@@ -8,6 +8,8 @@ Cette application repose sur un modèle YOLO (You Only Look Once), entraîné sp
 
 L'objectif principal de cette application est de démontrer la faisabilité de l'accessibilité et l'aide aux personnes malentendantes pour communiquer plus facilement avec leur entourage, en particulier dans des situations où un traducteur de langue des signes n'est pas disponible. Le *scope* de cette application s'inscrit dans le cadre d'un démonstrateur sur des signes simples (lettres), en ignorant l'ensemble du dictionnaire de langue des signes, pour permettre au projet de conserver la dimension d'un projet de fin de session.
 
+Pour ce projet nous souhaitons dans un premier temps proposer une détection de lettres en langue des signes. Nous avons choisi de nous concentrer sur les lettres de l'alphabet américain, il s'agit du langage le plus utilisé dans le monde.
+
 ## Implémentation
 
 ### Modèle
@@ -103,6 +105,8 @@ Une fois ces conditions respectées, nous pouvons commencer l'entraînement du m
 Ce dernier peut soit débuter depuis un modèle vierge fournit par YOLO (par exemple `yolo11n.pt`) soit en faisant du transfert learning ou de l'affinement de paramètres en partant d'un modèle déjà entraîné. 
 
 Nous sommes partis du premier cas, en entraînant notre modèle "*from scratch*". 
+
+
 
 ### Utilisation des flux vidéos enregistrés et de la webcam
 Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du modèle YOLO soit sur un fichier vidéo (*type MP4*), soit directement le flux de la webcam principale de l'ordinateur.  
@@ -233,6 +237,8 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 
 ### Résultats de l'entraînement des modèles
 > TODO : Résultats de l'entraînement du modèle, à compléter
+
+![Matrice de confusion du modèle](YOLO_train/models/train_100_augmented/confusion_matrix_normalized.png "Matrice de confusion du modèle").
 
 ## Conclusion
 
