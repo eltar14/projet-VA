@@ -270,6 +270,14 @@ La troisième image la lettre signée est un A mais un C est détecté, avec une
 
 La dernière image est un exemple d'une lettre correcte : le W
 
+D'une manière générale, notre modèle trouve uniquement quelques lettres qu'il va prédire sur beaucoup de signes, comme l'exemple de la lettre K :
+
+![Ex2](1m_ex2.png)
+
+Toutes les prédictions sont de K ou un peu de U 
+
+Pour référence, les lettres signées ici sont dans l'ordre : K - D - F - U - P - B 
+
 #### Deuxième modèle : ajout du dataset [American Sign Language](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) entier
 
 Notre hypothèse sur les performances mauvaises de notre premier modèle était que nous n'avions pas assez d'images dans notre dataset. Pour y remédier nous avons trouvé ce dataset, bien plus fourni. 
