@@ -355,14 +355,35 @@ En revanche, les signes sont beaucoup mieux perçus en situation réelle !
 
 ![exemple](4m_ex.png)
 
-Tous les signes sont correctement trouvés, et à présent toutes les lettres de l'alphabet peuvent être détectées. Certaines necessitent parfois un peu de temps au modèle, mais il finit par y arriver. 
+Tous les signes sont correctement trouvés, et à présent toutes les lettres de l'alphabet peuvent être détectées. Certaines necessitent parfois un peu de temps au modèle, mais il finit par y arriver (particulièrement difficile pour les lettres "J" et "Z" pour lesquelles le modèle a eu peu d'exemples, car le geste est normalement signé avec du mouvement)
 
 Les résultats sont donc vraiment bons avec ce modèle.
 
 #### Cinquième modèle : ajout du dataset [Face Detection Dataset](https://www.kaggle.com/datasets/freak2209/face-data) et de la classe "face" (également augmentées)
 
-Ce dernier modèle est très similaire 
+Ce dernier modèle est très similaire au précédent, nous avons seulement rajouté une classe de détection supplémentaire : le visage (mise en anglais "face" dans le modèle pour garder la cohérence de la détection de la langue des signes anglaise)
 
+| Nombre d'images d'entraînement | Nomre d'epochs entraînés | Temps d'entraînement approximatif |
+|--------------------------------|--------------------------|-----------------------------------|
+| 12 218                          | 200                   | 5h                                |
+
+##### Matrice de confusion
+![Matrice de confusion du modèle](5m_confusion_matrix_normalized.png "Matrice de confusion du modèle")
+
+Ici aussi, la matrice de confusion est globalement très bonne, avec toujours la même petite difficulté à trouver une lettre (cas du "background") On voit la nouvelle classe "face" qui est globalement bien detectée. 
+L'entraînement a été recommencé de zero (from scratch) pour pouvoir observer les différentes améliorations en partant toujours du même point de départ. Une version partant du modèle précédent (en transfert learning) aurait également été envisageable, à condition de bien garder toutes les images de notre set pour que le modèle n'"oublie" pas ce qu'il a appris avant.
+
+Les métriques de loss et precision sont très belles sur nos 200 epochs : 
+
+![Metriques loss_precision](5m_results.png)
+
+La perte suit une belle courbe vers le bas, convergeant vers 0. La precision, le recall et le mAP sont très haut, près de 0,8 ou au-dessus. Ce sont donc des valeurs encourageante et qui devraient nous donner un modèle efficace. 
+
+![exemple](5m_ex.png)
+
+Cette image est un échantillon du batch de validation du modèle. On voit que les visages sont bien detectés. 
+
+Dans notre repertoire GitHub, ce modèle est celui utilisé par défaut, et il est présent dans le dossier "models/train_200_face_augmented".
 
 ## Conclusion
 
