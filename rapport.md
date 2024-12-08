@@ -6,10 +6,9 @@ L'accessibilité est une priorité croissante dans le développement technologiq
 
 Cette application repose sur un modèle YOLO (You Only Look Once), entraîné spécifiquement sur un *dataset* de lettres en langue des signes. Grâce à ce modèle de détection d'objets, notre solution est capable de déchiffrer des signes en temps réel via des flux vidéo de *webcam* ou des vidéos préenregistrées. YOLO, en raison de sa rapidité et de son efficacité pour détecter et classer des objets, est parfaitement adapté pour une reconnaissance en temps réel, essentielle pour interpréter les signes de manière fluide et précise.
 
-L'objectif principal de cette application est de démontrer la faisabilité de l'accessibilité et l'aide aux personnes malentendantes pour communiquer plus facilement avec leur entourage, en particulier dans des situations où un traducteur de langue des signes n'est pas disponible. Le *scope* de cette application s'inscrit dans le cadre d'un démonstrateur sur des signes simples (lettres), en ignorant l'ensemble du dictionnaire de langue des signes, pour permettre au projet de conserver la dimension d'un projet de fin de session. 
+L'objectif principal de cette application est de démontrer la faisabilité de l'accessibilité et l'aide aux personnes malentendantes pour communiquer plus facilement avec leur entourage, en particulier dans des situations où un traducteur de langue des signes n'est pas disponible. Le *scope* de cette application s'inscrit dans le cadre d'un démonstrateur sur des signes simples (lettres), en ignorant l'ensemble du dictionnaire de langue des signes, pour permettre au projet de conserver la dimension d'un projet de fin de session.
 
-## Cahier des charges
-
+Pour ce projet nous souhaitons dans un premier temps proposer une détection de lettres en langue des signes. Nous avons choisi de nous concentrer sur les lettres de l'alphabet américain, il s'agit du langage le plus utilisé dans le monde.
 
 ## Implémentation
 
@@ -18,8 +17,6 @@ L'objectif principal de cette application est de démontrer la faisabilité de l
 Le modèle YOLOv11 a été choisi pour sa rapidité et son efficacité. Il est capable de détecter et de classer des objets en temps réel, ce qui est essentiel pour notre application. Nous avons entraîné ce modèle sur un *dataset* de lettres et de chiffres en langue des signes, pour qu'il soit capable de reconnaître ces signes en temps réel.
 
 ### *Dataset*
-
-> TODO : Le dataset envoyé sur whatsapp ne comporte que des lettres, je laisse ça vide pour l'instant, à compléter
 
 YOLO nécessite, pour son entraînement, que les objets à détecter soient idéalement entourés de *bounding boxes*, ou qu'ils constituent toute l'image (pas d'autres éléments à côté ou derrière).   
 
@@ -33,6 +30,8 @@ Nous avons donc progressivement choisi trois datasets puis les avons fait corres
 - [American Sign Language - Kaggle](https://www.kaggle.com/datasets/kapillondhe/american-sign-language) : Le plus important avec 166000 images, mais une utilisabilité réduite à cause de la répétition des mêmes signes et des mêmes fonds, qui a fini par causer de l'*overfitting*, résolu plus bas.
 - [ASLYset - Mendeley](https://data.mendeley.com/datasets/xs6mvhx6rh/1) : Dataset de bonne qualité contenant des images variées : il est composé de 5200 images, avec 4 personnes différentes interprétant les signes. Cependant, il ne contient pas les lettres *J* et *Z,* car elles nécessitent d'être accompagnées d'un mouvement en plus du signe. Des caractères *fn* et *sp* sont aussi présents, que nous avons mis de côté pour correspondre aux autres datasets. Plus de détails dans la partie *Difficultés rencontrées* &rarr; *Augmenter la taille du dataset*
 
+L'ensemble est résumé dans le tableau ci-dessous :
+
 | Nom du set                        | Source                                                                                           | Description                                                                                                                                                               | Points forts                                                                                   | Points faibles                                                  |
 |-----------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
 | Sign Language Dataset for YOLOv7 | [Kaggle](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7)           | Dataset contenant toutes les lettres ASL, en format YOLO natif (images + labels).                                                                                         | Format YOLO natif, diversité des images et des fonds.                                           | Faible nombre d'images : initialement peu fonctionnel.          |
@@ -41,8 +40,6 @@ Nous avons donc progressivement choisi trois datasets puis les avons fait corres
 
 
 ### Méthodologie
-
-> TODO : Méthodologie de l'entraînement du modèle, à compléter
 
 #### Modèle Ultralytics YOLO11
 Le modèle entraîné est un modèle nano de YOLO11 de Ultralytics.
@@ -76,13 +73,13 @@ dataset/
     └── labels
 ```
 le dataset doit être organisé en plusieurs répertoires : 
-- images/ : qui contiendra toutes les images possédant l'un des formats ['bmp', 'jpg', 'jpeg', 'png', 'tif', 'tiff', 'dng']. 
-- labels/ : qui contiendra tous les labels associés aux images, au format 'txt'. Chacune d'entre elles possédera un label, avec le même nom (seul le type du fichier change)
+- `images/` : qui contiendra toutes les images possédant l'un des formats [`bmp`, `jpg`, `jpeg`, `png`, `tif`, `tiff`, `dng`]. 
+- labels/ : qui contiendra tous les labels associés aux images, au format `txt`. Chacune d`entre elles possédera un label, avec le même nom (seul le type du fichier change)
     
 On peut encore les découper en 2 sous-dossiers : 
 
-- train/ : qui contiendra donc les données d'entrainement
-- test/ : qui contiendra les données de test du modèle
+- `train/` : qui contiendra donc les données d'entraînement
+- `test/` : qui contiendra les données de test du modèle
 
 Ensuite, les labels doivent respecter une mise en forme particulière : 
 
@@ -91,7 +88,7 @@ Ensuite, les labels doivent respecter une mise en forme particulière :
 ```
 Il y a autant de lignes qu'il y a d'éléments à observer sur l'image.
     
-De plus, les valeurs numériques sont normalisées. Donc si le centre de l'image est situé à 120x120px pour une image qui fait 240x240px, les valeurs du x et y du centre seront 0.5
+De plus, les valeurs numériques sont normalisées. Donc si le centre de l'image est situé à 120x120px pour une image qui fait 240x240px, les valeurs du `x` et `y` du centre seront 0.5
 
 Enfin, le modèle fonctionne avec un fichier .yaml qui permet de traduire les classes.
 
@@ -105,9 +102,11 @@ names: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O
 
 Une fois ces conditions respectées, nous pouvons commencer l'entraînement du modèle. 
 
-Ce dernier peut soit débuter depuis un modèle vierge fournit par YOLO (par exemple yolo11n.pt) soit en faisant du transfert learning ou de l'affinement de paramètres en partant d'un modèle déjà entraîné. 
+Ce dernier peut soit débuter depuis un modèle vierge fournit par YOLO (par exemple `yolo11n.pt`) soit en faisant du transfert learning ou de l'affinement de paramètres en partant d'un modèle déjà entraîné. 
 
-Nous sommes partis du premier cas, en entraînant notre modèle "from scratch". 
+Nous sommes partis du premier cas, en entraînant notre modèle "*from scratch*". 
+
+
 
 ### Utilisation des flux vidéos enregistrés et de la webcam
 Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du modèle YOLO soit sur un fichier vidéo (*type MP4*), soit directement le flux de la webcam principale de l'ordinateur.  
@@ -116,15 +115,15 @@ Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du 
 Afin de valider la détection d'une lettre, celle-ci doit être détectée durant 30 frames consécutives (soit environ une seconde). Cela permet d'éviter de prendre en compte les détections durant les temps de transition ainsi que les hésitations des débutants (i.e. nous).
 
 
-
 ### Utilisation d'un LLM pour affiner les prédictions et corriger les erreurs
 Nous avons mis en place une fonctionnalité permettant de fournir les lettres détectées par notre modèle dans un LLM (ChatGPT) en lui demandant de nous retourner le ou les mots les plus probables.  
 Cela permet de corriger les erreurs de détection comme une lettre manquante ou en double, voire une mauvaise, ainsi que d'ajouter les espaces entre les mots si manquants.  
-La lib `openai` a été utilisée pour intéragir avec ChatGPT, à qui on a fourni le contexte suivant : 
+La librairie `openai` a été utilisée pour interagir avec ChatGPT, à qui on a fourni le contexte suivant : 
 
 > "You are an intelligent assistant. You are part of an application of computer vision detecting American Sign Language. The following are the letters detected by a YOLO model. Try to guess which word or words the user tried to say. Answer only with the word or words."  
 
-Cet ajout s'est montré extrêmement efficace.   
+Cet ajout s'est montré extrêmement efficace :
+
 > GOTOKFC &rarr; go to KFC  
 
 > GIITHB &rarr; GITHUB
@@ -184,9 +183,7 @@ Ce script paramétrable, disponible dans le dossier `image_augmentation/`, appli
 
 Ce script a été rédigé avec la librairie python `albumentations`, qui permet de réaliser des transformations d'images de manière simple et efficace. La partie la plus complexe de cette étape a été d'arriver à conserver les informations de labels pendant les transformations du type rotation ou découpage, pour que les *bounding boxes* soient correctement ajustées.
 
-### Autres choix de conception
-
-> TODO : Si y a d'autres choses à dire
+### Détection des visages pour de futures améliorations
 
 La détection du visage joue un rôle essentiel dans la communication en langue des signes, car le visage est une composante clé pour transmettre des informations non verbales cruciales. Dans certains cas, les mouvements du visage, comme le froncement des sourcils ou l’inclinaison de la tête, peuvent même changer complètement le sens d’un signe ou indiquer une structure grammaticale spécifique. Par exemple, une question peut être signifiée uniquement par une expression faciale combinée aux gestes. Par conséquent, intégrer la détection du visage dans les systèmes de reconnaissance automatique de la langue des signes améliore significativement leur précision et leur capacité à interpréter le message dans son intégralité, en tenant compte des éléments visuels et contextuels indispensables pour une communication fluide et naturelle.
 
@@ -197,22 +194,26 @@ Pour cela nous avons ajouté un dataset et une classe supplémentaire à notre m
 
 [Face Detection Dataset - Kaggle](https://www.kaggle.com/datasets/freak2209/face-data) : composé de plus de 1000 images, mais dont nous n'en prenons que 300 pour le train et 30 pour le test, pour conserver un ordre de grandeur cohérent avec les autres classes. Il est déjà mis en forme pour YOLO, nous avons seulement modifié le numéro de la classe (qui était 0, déjà utilisée pour la lettre A)
 
+L'implémentation de la détection des visages ouvre la porte à de futures détections des expressions faciales, essentielles à la communication en langue des signes, afin de faciliter de futures améliorations de ce projet.
 
 ## Utilisation
 
 <!--Voir https://mermaid.js.org/syntax/sequenceDiagram.html--> 
-
 ```mermaid
 sequenceDiagram
+accDescr: Diagramme de flux d'utilisation de l'application
+
     participant U as Utilisateur
     participant DA as DatasetsAggregator
     participant IA as ImageAugmentation
-    participant W as Webcam
+    participant W as Interface Qt
     participant MY as ModèleYOLO
+    participant C as ChatGPT
 
-    rect rgb(0, 0, 50)
+    rect rgb(102, 217, 255)
     note right of U: Préparer les datasets
     U->>+DA: Fusionner les datasets
+    activate U
     DA->>-U: Dataset fusionné
     U->>+IA: Augmenter les images du dataset
     IA->>-U: Dataset augmenté
@@ -220,15 +221,27 @@ sequenceDiagram
     MY->>-U: Modèle entraîné
     end
 
-    rect rgb(50, 0, 00)
+    rect rgb(255, 128, 128)
     note right of U: Utiliser l'application
     U->>+W: Démarrer la capture vidéo
-    W->>-MY: Envoyer flux vidéo
-    MY->>U: Afficher les résultats
+    W->>MY: Envoie une frame
+    activate MY
+    MY->>W: Renvoie une prédiction
+    deactivate MY
+    W->>-U: Montre le résultat
+    U->>+W: Demande une correction
+    W->>C: Envoie une chaîne de caractères
+    activate C
+    C->>W: Envoie un texte
+    deactivate C
+    W->>-U: Montre le texte
+    deactivate U
     end
 ```
 
 ## Résultats
+
+### Outils de tests
 
 Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 
@@ -237,6 +250,8 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 
 ### Résultats de l'entraînement des modèles
 > TODO : Résultats de l'entraînement du modèle, à compléter
+
+![Matrice de confusion du modèle](YOLO_train/models/train_100_augmented/confusion_matrix_normalized.png "Matrice de confusion du modèle").
 
 ## Conclusion
 
