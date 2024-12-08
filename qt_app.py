@@ -43,6 +43,7 @@ class YOLOQtApp(QMainWindow):
 
         # Widgets pour l'affichage
         self.video_label = QLabel(self)
+
         self.text_display = QTextEdit(self) # on pourra régler la taille et la police si on veut.
         self.text_display.setReadOnly(True)  # affichage en lecture seule pour les prédictions
 
@@ -50,20 +51,25 @@ class YOLOQtApp(QMainWindow):
         self.secondary_text_display.setReadOnly(True)
 
         self.pause_button = QPushButton("Pause", self)  # bouton de pause
+
         self.concat_checkbox = QCheckBox("Concaténer les prédictions", self)  # Bouton à cocher pour la concaténation
 
-        self.predict_button = QPushButton("Predict", self)
+        self.clear_button = QPushButton("Clear", self)
+
+        self.predict_button = QPushButton("Correct text with AI", self)
         self.predict_button.hide()  # caché au départ
 
 
         # Connect
         self.pause_button.clicked.connect(self.toggle_pause)
         self.concat_checkbox.stateChanged.connect(self.toggle_concat)
+        self.clear_button.clicked.connect(self.clear_text_fields)
         self.predict_button.clicked.connect(self.predict_action)
 
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.pause_button)
         button_layout.addWidget(self.predict_button)
+        button_layout.addWidget(self.clear_button)
 
         # Layout principal
         layout = QVBoxLayout()
@@ -98,10 +104,15 @@ class YOLOQtApp(QMainWindow):
             self.predict_button.show()
         self.is_paused = not self.is_paused
 
+
+    def clear_text_fields(self):
+        self.text_display.clear()
+        self.secondary_text_display.clear()
+        self.detected_text = ""
     def predict_action(self):
         """
-        action du clic sur predict
-        va venir mettre la prediction de chat gpt dans la seconde case de texte
+        action du clic sur predict / correct text with AI
+        va venir mettre la prediction/correction de texte de chat gpt dans la seconde case de texte
         """
         user_input = self.text_display.toPlainText().strip()
         if not user_input:
@@ -155,6 +166,7 @@ class YOLOQtApp(QMainWindow):
         self.concat_enabled = bool(state)
         if not self.concat_enabled:
             self.detected_text = ""  # RAZ si on arrête la concaténation
+            #self.secondary_text_display.clear()
 
     def update_frame(self):
         """
