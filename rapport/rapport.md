@@ -10,6 +10,10 @@ L'objectif principal de cette application est de démontrer la faisabilité de l
 
 Pour ce projet nous souhaitons dans un premier temps proposer une détection de lettres en langue des signes. Nous avons choisi de nous concentrer sur les lettres de l'alphabet américain, il s'agit du langage le plus utilisé dans le monde.
 
+**Le code source de ce projet est disponible sur [Github](https://github.com/eltar14/projet-VA).**
+
+\pagebreak
+
 ## Implémentation
 
 ### Modèle
@@ -106,14 +110,11 @@ Ce dernier peut soit débuter depuis un modèle vierge fournit par YOLO (par exe
 
 Nous sommes partis du premier cas, en entraînant notre modèle "*from scratch*". 
 
-
-
 ### Utilisation des flux vidéos enregistrés et de la webcam
 Dans `qt_app.py`, nous pouvons choisir de faire et afficher les prédictions du modèle YOLO soit sur un fichier vidéo (*type MP4*), soit directement le flux de la webcam principale de l'ordinateur.  
 
 ### Validation d'une lettre
 Afin de valider la détection d'une lettre, celle-ci doit être détectée durant 30 frames consécutives (soit environ une seconde). Cela permet d'éviter de prendre en compte les détections durant les temps de transition ainsi que les hésitations des débutants (i.e. nous).
-
 
 ### Utilisation d'un LLM pour affiner les prédictions et corriger les erreurs
 Nous avons mis en place une fonctionnalité permettant de fournir les lettres détectées par notre modèle dans un LLM (ChatGPT) en lui demandant de nous retourner le ou les mots les plus probables.  
@@ -196,22 +197,27 @@ Pour cela nous avons ajouté un dataset et une classe supplémentaire à notre m
 
 L'implémentation de la détection des visages ouvre la porte à de futures détections des expressions faciales, essentielles à la communication en langue des signes, afin de faciliter de futures améliorations de ce projet.
 
+\pagebreak
+
 ## Utilisation
 
-<!--Voir https://mermaid.js.org/syntax/sequenceDiagram.html--> 
-> TODO : modifier le graph pour mettre celui du ppt
+Ci-dessous le diagramme de flux d'utilisation simplifié de l'application :
 
 ```mermaid
 sequenceDiagram
+accDescr: Diagramme de flux d'utilisation de l'application
+
     participant U as Utilisateur
     participant DA as DatasetsAggregator
     participant IA as ImageAugmentation
-    participant W as Webcam
+    participant W as Interface Qt
     participant MY as ModèleYOLO
+    participant C as ChatGPT
 
-    rect rgb(0, 0, 50)
+    rect rgb(102, 217, 255)
     note right of U: Préparer les datasets
     U->>+DA: Fusionner les datasets
+    activate U
     DA->>-U: Dataset fusionné
     U->>+IA: Augmenter les images du dataset
     IA->>-U: Dataset augmenté
@@ -219,13 +225,25 @@ sequenceDiagram
     MY->>-U: Modèle entraîné
     end
 
-    rect rgb(50, 0, 00)
+    rect rgb(255, 128, 128)
     note right of U: Utiliser l'application
     U->>+W: Démarrer la capture vidéo
-    W->>-MY: Envoyer flux vidéo
-    MY->>U: Afficher les résultats
+    W->>MY: Envoie une frame
+    activate MY
+    MY->>W: Renvoie une prédiction
+    deactivate MY
+    W->>-U: Montre le résultat
+    U->>+W: Demande une correction
+    W->>C: Envoie une chaîne de caractères
+    activate C
+    C->>W: Envoie un texte
+    deactivate C
+    W->>-U: Montre le texte
+    deactivate U
     end
 ```
+
+\pagebreak
 
 ## Résultats
 
@@ -237,7 +255,6 @@ Nous avons réalisé nos tests utilisant deux types de flux vidéos :
 - Un flux vidéo en direct, à partir de la *webcam* de l'ordinateur
 
 ### Résultats de l'entraînement des modèles
-> TODO : Résultats de l'entraînement du modèle, à compléter
 
 #### Premier modèle : dataset initial ([Sign Language Dataset for YOLOv7](https://www.kaggle.com/datasets/daskoushik/sign-language-dataset-for-yolov7))
 
@@ -393,6 +410,8 @@ Cette image est un échantillon du batch de validation du modèle. On voit que l
 
 Dans notre repertoire GitHub, ce modèle est celui utilisé par défaut, et il est présent dans le dossier "models/train_200_face_augmented".
 
+\pagebreak
+
 ## Conclusion
 
 Dans ce projet, nous avons réussi à mettre en place un modèle de détection d'objets capable de reconnaître des signes en
@@ -412,6 +431,8 @@ des signes implique de signer de nombreux mots, à peu près autant qu'en langue
 plus complexe, capable de reconnaître un grand nombre de signes différents, avec un temps d'entraînement d'autant 
 conséquent. Ce serait une autre piste d'amélioration découlant de la première, qui serait possible en étendant le 
 *dataset* et en entraînant le modèle sur un plus grand nombre de signes.
+
+\pagebreak
 
 ## Références
 
